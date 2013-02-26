@@ -25,8 +25,8 @@ updated = """Your friendly neighbourhood flairbot added flair to your post
             automatically. If your flair is in error, please do not
             hesitate to tell /u/aphoenix about it."""
 
-
-finito = []
+#already taken care of
+atco = []
 
 
 def checkarmor(type, submission):
@@ -36,7 +36,7 @@ def checkarmor(type, submission):
         try:
             submission.set_flair(submission.id,type[0].capitalize,type[0])
             submission.add_comment(updated)
-            finito.append(submission.id)
+            atco.append(submission.id)
         except Exception:
             print 'did not add flair'
 
