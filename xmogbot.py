@@ -1,13 +1,13 @@
 import praw
 import time
-import creds 
+import creds
 
 user_agent = "aphoenix's bot for the Transmogrification subreddit"
 thing_limit = 15 
 
 
 r = praw.Reddit(user_agent=user_agent)
-r.login('aptbot',creds.thepass)
+r.login(creds.uid,creds.pw)
 xmog = r.get_subreddit('Transmogrification')
 
 
@@ -33,13 +33,12 @@ def checkarmor(type, submission):
     '''check against armor type keywords in title to auto assign flair'''
     if any (word in submission.title.lower() for word in type):
         print 'setting flair for ' + submission.id + ' to ' + type[0]
-        try:
-            submission.set_flair(submission.id,type[0].capitalize(),type[0])
-            submission.add_comment(updated)
-            atco.append(submission.id)
-            return False
-        except Exception:
-            print 'did not add flair'
+#        try:
+#            submission.set_flair(submission.id,type[0].capitalize(),type[0])
+#            submission.add_comment(updated)
+#            atco.append(submission.id)
+#        except Exception:
+#            print 'did not add flair' + Exception
 
 
 running = True
