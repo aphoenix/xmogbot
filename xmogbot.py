@@ -1,13 +1,13 @@
 import praw
 import time
-
+import creds 
 
 user_agent = "aphoenix's bot for the Transmogrification subreddit"
 thing_limit = 15 
 
 
 r = praw.Reddit(user_agent=user_agent)
-r.login('aptbot','yTp["H]iP]<iHveX2:]oJo\Yp')
+r.login('aptbot',creds.thepass)
 xmog = r.get_subreddit('Transmogrification')
 
 
@@ -34,9 +34,10 @@ def checkarmor(type, submission):
     if any (word in submission.title.lower() for word in type):
         print 'setting flair for ' + submission.id + ' to ' + type[0]
         try:
-            submission.set_flair(submission.id,type[0].capitalize,type[0])
+            submission.set_flair(submission.id,type[0].capitalize(),type[0])
             submission.add_comment(updated)
             atco.append(submission.id)
+            return False
         except Exception:
             print 'did not add flair'
 
@@ -44,7 +45,7 @@ def checkarmor(type, submission):
 running = True
 while (running):
     for submission in xmog.get_hot(limit=thing_limit):
-        if (submission.link_flair_text == None and submission.id not in finito):
+        if (submission.link_flair_text == None and submission.id not in atco):
             for type in types:
                 checkarmor(type, submission)
-    time.sleep(180)
+    time.sleep(1800)
