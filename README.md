@@ -1,11 +1,31 @@
-This is the bot for the Transmogrification subreddit.
+#This is the bot for the Transmogrification subreddit.
 
-It requires an additional file called creds.py
+##WHAT IT DOES
 
-At this point, all creds.py really needs for this to work is the credential for
-the reddit account that you connect with. Somethings like:
+- scans for flair keywords
+- adds flair
+- leaves a comment in the thread that it did something
+- completely ignores posts that don't fit a pattern (see TODO)
+- 'logs' to screen
 
-user = "scoobydoo"
-pass = "scoobydoopassword"
+##TODO
+
+- smarter logging -> post to /r/aptbot?
+- add reminders to post gear lists
+
+
+##REQUIREMENTS
+
+Built on top of [praw](/praw-dev/praw).
+
+Requires an additional file called creds.py which only requires
+a uid and pw:
+
+uid = "scoobydoo"           # your userid
+pw = "scoobydoopassword"    # your password
 
 is sufficient.
+
+
+
+
