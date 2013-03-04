@@ -2,6 +2,7 @@ import praw
 import time
 import creds
 
+
 user_agent = "aphoenix's bot for the Transmogrification subreddit"
 thing_limit = 15 
 
@@ -21,30 +22,37 @@ meta = ['meta','help']
 types = [cloth,leather,mail,plate,meta]
 
 
+flagurls = ['imgur','min.us']
+
+
 updated = """Your friendly neighbourhood flairbot added flair to your post
             automatically. If your flair is in error, please do not
             hesitate to tell /u/aphoenix about it."""
 
-#already taken care of
-atco = []
+
+# already taken care of = atco
+# f = flair
+# i = item list
+atcof = []
+atcoi = []
 
 
 def checkarmor(type, submission):
     '''check against armor type keywords in title to auto assign flair'''
     if any (word in submission.title.lower() for word in type):
-        print 'setting flair for ' + submission.id + ' to ' + type[0]
-#        try:
-#            submission.set_flair(submission.id,type[0].capitalize(),type[0])
-#            submission.add_comment(updated)
-#            atco.append(submission.id)
-#        except Exception:
-#            print 'did not add flair' + Exception
+        print 'setting flair for ' + submission.id + ' to ' + type[0].capitalize()
+        try:
+            submission.set_flair(type[0].capitalize(),type[0])
+            submission.add_comment(updated)
+            atcof.append(submission.id)
+        except Exception:
+            print 'did not add flair'
 
 
 running = True
 while (running):
     for submission in xmog.get_hot(limit=thing_limit):
-        if (submission.link_flair_text == None and submission.id not in atco):
+        if (submission.link_flair_text == None and submission.id not in atcof):
             for type in types:
                 checkarmor(type, submission)
-    time.sleep(1800)
+    time.sleep(600)
