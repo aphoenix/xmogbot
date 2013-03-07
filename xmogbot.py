@@ -1,6 +1,10 @@
 import praw
 import time
-import creds
+try:
+    import creds
+except ImportError:
+    print "Must have creds.py with valid reddit login credentials. uid pw"
+    exit()
 
 
 user_agent = "aphoenix's bot for the Transmogrification subreddit"
@@ -47,6 +51,15 @@ def checkarmor(type, submission):
             atcof.append(submission.id)
         except Exception:
             print 'did not add flair'
+
+
+#def checkitemlist(submission):
+#    '''check to see if the url is imgur or min.us. Then, if there are
+#    no comments by the OP, tell them to post an item list.'''
+#    if any (word in flagurls for word in submission.getinfo(url) and 
+#                            submission.id not in atcoi):
+#        for comment in submission.get_comments():
+#            get_comments
 
 
 running = True
