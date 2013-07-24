@@ -8,7 +8,7 @@ except ImportError:
 
 
 user_agent = "aphoenix's bot for the Transmogrification subreddit"
-thing_limit = 15 
+thing_limit = 25 
 
 
 r = praw.Reddit(user_agent=user_agent)
@@ -26,13 +26,23 @@ meta = ['meta','help']
 types = [cloth,leather,mail,plate,meta]
 
 
+thanks = ['thanks', 'thank you', 'awesome', 'obliged']
+welcome = ['No problem!', 'You\'re welcome.', 'I live but to serve.', 'Happy to help!', 'Don\'t mention it', 'No worries.']
+
+
+fightinwords = ['shit', 'piss', 'cunt', 'fuck', 'cocksucker', 'motherfucker', 'tits']
+realbadwords = ['nigger', 'faggot', 'whore']
+
+
 flagurls = ['imgur','min.us']
 
 
-updated = """Your friendly neighbourhood flairbot added flair to your post
-            automatically. If your flair is in error, please do not
-            hesitate to tell /u/aphoenix about it."""
-
+def explainupdate(flair):
+    '''Tells the user which flair they received'''
+    updated = " I tagged your post as "
+    updated += flair
+    updated += ". If it's wrong, tell the mods."
+    return updated
 
 # already taken care of = atco
 # f = flair
@@ -47,7 +57,7 @@ def checkarmor(type, submission):
         print 'setting flair for ' + submission.id + ' to ' + type[0].capitalize()
         try:
             submission.set_flair(type[0].capitalize(),type[0])
-            submission.add_comment(updated)
+            submission.add_comment(explainupdate(type[0].capitalize()))
             atcof.append(submission.id)
         except Exception:
             print 'did not add flair'
@@ -64,8 +74,15 @@ def checkarmor(type, submission):
 
 running = True
 while (running):
-    for submission in xmog.get_hot(limit=thing_limit):
-        if (submission.link_flair_text == None and submission.id not in atcof):
-            for type in types:
-                checkarmor(type, submission)
-    time.sleep(600)
+    try:
+        for submission in xmog.get_hot(limit=thing_limit):
+            if (submission.link_flair_text == None and submission.id not in atcof):
+                for type in types:
+                    checkarmor(type, submission)
+        for message in r.get_unread(limit=thing_limit):
+            print message.body
+            print message.author
+        time.sleep(600)
+    except:
+        print 'reddit timed out a bit there'
+        time.sleep(1200)
